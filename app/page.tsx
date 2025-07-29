@@ -299,7 +299,7 @@ export default function EnrootWebsite() {
       {/* Footer */}
       <footer className="py-16 px-8 bg-[#0A19DC]">
         <div className="max-w-6xl mx-auto text-center">
-          <img src="/images/enroot-logo.jpg" alt="Enroot Logo" className="w-40 h-auto mx-auto mb-6" />
+          <img src="/images/public/Copia de ENROOT_20250730_000049_0000.jpg" alt="Enroot Logo" className="w-40 h-auto mx-auto mb-6" />
           <p className="text-xl text-blue-100 font-light mb-4">
             Personas, ciencia y propósito en el centro de la organización
           </p>

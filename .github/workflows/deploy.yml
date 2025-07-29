@@ -7,27 +7,39 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: read      # Permite leer el contenido del repositorio
+  pages: write        # Permite escribir en GitHub Pages
+  id-token: write     # Requerido por deploy-pages para autenticarse
 
 concurrency:
-  group: "pages"
+  group: pages
   cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      # 1. Descarga el código fuente
       - uses: actions/checkout@v4
+
+      # 2. Instala pnpm en la versión deseada y ejecuta 'pnpm install'
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: true
+
+      # 3. Configura el entorno de Node
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: pnpm
-      - run: corepack enable
-      - run: pnpm install --frozen-lockfile
+
+      # 4. Compila el proyecto
       - run: pnpm run build
+
+      # 5. Exporta el proyecto a HTML estático (carpeta 'out')
       - run: pnpm exec next export
+
+      # 6. Sube la carpeta 'out' como artefacto para GitHub Pages
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -40,6 +52,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      # 7. Despliega el artefacto a GitHub Pages
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

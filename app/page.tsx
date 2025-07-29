@@ -309,6 +309,3 @@ export default function EnrootWebsite() {
     </div>
   )
 }
-      {/* Contacto */}
-      <section id="contacto" className="py-32 px-8">
-        <div className="max-w-5xl mx-auto">...
